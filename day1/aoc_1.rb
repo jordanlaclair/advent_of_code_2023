@@ -14,7 +14,6 @@ temp_arr = Array.new
 }
 
 
-
 def parseLine(line, numbers_hash)
   temp = ""
   line.chars.each do |c|
