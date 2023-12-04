@@ -64,7 +64,4 @@ end
 
 
 
-puts ""
-#puts allowed_games
-puts ""
 puts allowed_games_ids_sum

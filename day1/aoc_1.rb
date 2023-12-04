@@ -38,7 +38,7 @@ temp_arr = file.map! { |line| parseLine(line, numbers_hash) }
 
 numbers_arr = temp_arr.map { |line| line.delete('^0-9') }
 
-puts numbers_arr
+# puts numbers_arr
 
 
 
@@ -65,5 +65,4 @@ for i in numbers_arr
   subTotal += total
 end
 
-puts ""
 puts subTotal
