@@ -1,6 +1,9 @@
 file = File.read('./main.txt').split("\n")
 pile_of_cards_total = 0
 
+
+
+
 file.each do |line|
 line_without_card  = line.split(": ")[1]
 winning_numbers = line_without_card.split(" |")[0].split(" ")
