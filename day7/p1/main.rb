@@ -1,57 +1,159 @@
-
-
-
 class CardType
   attr_accessor :name,:value
-  def initialize
-    @name = ""
-    @value = 0
+  def initialize(name = "", value = 0)
+    @name = name
+    @value = value
   end
 end
 
 class TypeStrategy
-  @@card_type = CardType.new
-  @@cards
-
-
+  @card_type
+  @cards
 
   def initialize(cards)
-    @@cards = cards
-    @@card_type = CardType.new
+    @cards = cards
+    @card_type
   end
 
-  def self.card_type
-    @@card_type
+  def self.cards
+    @cards
 end
 
 end
 
-class AllSameCardsStrategy < TypeStrategy
+class FiveOfAKindStrategy < TypeStrategy
 
   def initialize(cards)
     super(cards)
   end
 
   def setType
-    card = @@cards[0]
+    card = @cards[0]
     flag = true
 
-    @@cards.each do |i|
+    @cards.each do |i|
       if i != card
        flag = false
     end
     end
 
     if flag == true
-      @@card_type.name = "Five of a Kind"
-      @@card_type.value = 1
+      @card_type = CardType.new("Five of a Kind", 1)
     end
   end
 
   def get_card_type
-    @@card_type
+    @card_type
   end
 end
+
+
+def OfAKind(cards, of_a_kind_count, remainingCardsStrategy)
+  first_card = @cards[0]
+  different_card = ""
+
+  first_card_count = 0
+  different_card_count = 0
+
+  cards.each do |i|
+    occurences = cards.count(i)
+    if occurences == of_a_kind_count
+      return true if reminaingCardsHandler(cards.reject{|j| j == i},remainingCardsStrategy)
+    end
+  end
+
+return nil
+end
+
+def reminaingCardsHandler(cards, handler)
+  if handler == "RemainingCardsSame"
+    return true if reminaingCardsSame(cards)
+  end
+  if handler == "RemainingCardsDifferentFromHand"
+    return true if reminaingCardsDifferent(cards)
+  end
+end
+
+
+def reminaingCardsSame(cards)
+  cards.uniq.size == 1
+end
+
+def reminaingCardsDifferent(cards)
+  cards.uniq.size != 1
+end
+
+
+
+class FourOfAKindStrategy < TypeStrategy
+  @of_a_kind_count
+
+  def initialize(cards)
+    @of_a_kind_count = 4
+    super(cards)
+  end
+
+
+  def setType
+    if(OfAKind(@cards, @of_a_kind_count, "RemainingCardsSame"))
+      @card_type = CardType.new("Four of a Kind", 2)
+    end
+  end
+
+  def get_card_type
+    @card_type
+  end
+end
+
+class FullHouse < TypeStrategy
+  @of_a_kind_count
+
+  def initialize(cards)
+    @of_a_kind_count = 3
+    super(cards)
+  end
+
+
+  def setType
+    if(OfAKind(@cards, @of_a_kind_count, "RemainingCardsSame"))
+      @card_type = CardType.new("FullHouse", 3)
+    end
+  end
+
+  def get_card_type
+    @card_type
+  end
+end
+
+
+class ThreeOfAKind < TypeStrategy
+  @of_a_kind_count
+
+  def initialize(cards)
+    @of_a_kind_count = 3
+    super(cards)
+  end
+
+
+  def setType
+    if(OfAKind(@cards, @of_a_kind_count, "RemainingCardsDifferentFromHand"))
+      @card_type = CardType.new("Three of a Kind", 4)
+    end
+  end
+
+  def get_card_type
+    @card_type
+  end
+  def cards
+    @cards
+  end
+end
+
+
+
+
+
+
 
 
 
@@ -67,13 +169,35 @@ def initialize
 end
 
 def type
-strategy1 = AllSameCardsStrategy.new(self.cards)
+strategy1 = FiveOfAKindStrategy.new(self.cards)
 strategy1.setType
 
+strategy2 = FourOfAKindStrategy.new(self.cards)
+strategy2.setType
+
+strategy3 = FullHouse.new(self.cards)
+strategy3.setType
+
+strategy4 = ThreeOfAKind.new(self.cards)
+strategy4.setType
 
 
-if(strategy1.get_card_type.name != "")
-  p strategy1.get_card_type
+
+
+if(strategy1.get_card_type)
+  #p strategy1.get_card_type
+end
+
+if(strategy2.get_card_type)
+  #p strategy2.get_card_type
+end
+
+if(strategy3.get_card_type)
+  #p strategy3.get_card_type
+end
+
+if(strategy4.get_card_type)
+  p strategy4.get_card_type
 end
 
 end
