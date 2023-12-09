@@ -1,1 +1,1 @@
-p
+hand1_cards.each_with_index do |letter, card_index|
