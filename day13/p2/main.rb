@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require 'set'
 
 def is_symmetry_line?(lines, (a, b))
   while a > 0 && b < lines.length - 1
@@ -54,8 +55,7 @@ def summarize(pattern)
   counts.to_a.find { |c| c != original }
 end
 
-file = File.open(ARGV[0])
 
-patterns = file.readlines.join.split("\n\n")
+patterns = File.readlines("main.txt").join.split("\n\n")
 
 puts patterns.sum { |p| summarize(p) }
