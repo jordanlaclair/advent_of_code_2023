@@ -6,8 +6,6 @@ col_len = 0
 
 planet_counter = 0
 
-
-
 IO.readlines("./main.txt").map(&:chomp).each_with_index do |line,index1|
 #get x cords of empty row
 if !line.include?("#")
