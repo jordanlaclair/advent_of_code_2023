@@ -58,10 +58,11 @@ while queue.length != 0
   end
 end
 
-set = Set.new
-seen.each do |i|
-  r,c,dr,dc = i
-  set.add([r,c])
-end
+  set = Set.new
+  seen.each do |i|
+    r,c,dr,dc = i
+    set.add([r,c])
+  end
+  set.length
 
-puts set.length
+p set.length
